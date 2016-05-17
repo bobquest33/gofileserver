@@ -32,7 +32,7 @@ func upload(folder string) http.HandlerFunc {
 	formdata := r.MultipartForm // ok, no problem so far, read the Form data
     files := formdata.File["multiplefiles"] // grab the filenames
    	for i, _ := range files { // loop through the files one by one
-		thepath, err := filepath.Abs("tmp/"+filepath.Dir(files[i].Filename))
+		thepath, err := filepath.Abs(folder+"/"+filepath.Dir(files[i].Filename))
 
         if err != nil {
      	   fmt.Fprintf(w, err.Error())
@@ -51,7 +51,7 @@ func upload(folder string) http.HandlerFunc {
      	    return
         }
 
-    	out, err := os.Create("tmp/" + files[i].Filename)
+    	out, err := os.Create(folder+"/" + files[i].Filename)
   
     	defer out.Close()
     	if err != nil {
